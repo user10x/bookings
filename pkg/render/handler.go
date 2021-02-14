@@ -1,12 +1,6 @@
 package render
 
-func home() {
-
-}
-func about() {
-
-}
-
-func renderTemplate() {
+// RenderTemplate renders HTML templates
+func RenderTemplate() {
 
 }
