@@ -18,6 +18,7 @@ func main() {
 	r.Use(middleware.Timeout(60 * time.Second))
 
 	r.Use(middleware.Logger)
+	r.Use(middlewareCustom) //custom middleware
 	r.Get("/about", handler.About)
 	r.Get("/home", handler.About)
 
