@@ -2,8 +2,11 @@ package handlers
 
 import (
 	"github.com/nickhalden/mynicceprogram/pkg/config"
+	"github.com/nickhalden/mynicceprogram/pkg/driver"
 	"github.com/nickhalden/mynicceprogram/pkg/models"
 	"github.com/nickhalden/mynicceprogram/pkg/render"
+	"github.com/nickhalden/mynicceprogram/repository"
+	"github.com/nickhalden/mynicceprogram/repository/dbrepo"
 	"net/http"
 )
 
@@ -12,12 +15,14 @@ var Repo *Repository
 
 type Repository struct {
 	App *config.AppConfig
+	DB  repository.DatabaseRepo
 }
 
 // NewRepo creates a new repository
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
 }
 

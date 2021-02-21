@@ -21,18 +21,21 @@ func main() {
 
 	var app config.AppConfig
 	// get the connection and close db connection after main is done
+	render.NewTemplates(&app)
+
+	// connect to the database
 	db, err := run()
+	defer db.SQL.Close()
+
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	repo := handlers.NewRepo(&app)
-	handlers.NewHandlers(repo)
-
-	render.NewTemplates(&app)
-
 	log.Println("Connected to database")
-	defer db.SQL.Close()
+
+	// Repository pattern
+	repo := handlers.NewRepo(&app, db)
+	handlers.NewHandlers(repo)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Timeout(60 * time.Second))

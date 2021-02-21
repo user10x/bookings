@@ -6,13 +6,13 @@ import (
 	"github.com/nickhalden/mynicceprogram/repository"
 )
 
-//
+// postgresDBRepo type of the repo
 type postgresDBRepo struct {
 	App *config.AppConfig
 	DB  *sql.DB
 }
 
-// mysql to add another database
+// Add another type mysql to add another database
 
 func NewPostgresRepo(conn *sql.DB, a *config.AppConfig) repository.DatabaseRepo {
 	return &postgresDBRepo{
