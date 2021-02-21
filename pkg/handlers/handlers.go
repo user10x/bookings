@@ -42,7 +42,7 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	stringMap := make(map[string]string)
 
 	stringMap["test"] = "Hello from template"
-	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
+	render.Template(w, "about.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
 	})
 }
@@ -50,6 +50,6 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 // Home returns home route
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	//w.Write([]byte("Calling Home route"))
-	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
+	render.Template(w, "home.page.tmpl", &models.TemplateData{})
 
 }

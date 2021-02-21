@@ -16,12 +16,12 @@ var functions = template.FuncMap{}
 var app *config.AppConfig
 
 // sets the config for the   package
-func NewTemplates(a *config.AppConfig) {
+func NewRenderer(a *config.AppConfig) {
 	app = a
 }
 
 // RenderTemplate renders a template
-func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
+func Template(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
 	tc, err := CreateTemplateCache()
 	if err != nil {
 		log.Fatal(err)

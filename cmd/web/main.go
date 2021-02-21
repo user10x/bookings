@@ -21,7 +21,7 @@ func main() {
 
 	var app config.AppConfig
 	// get the connection and close db connection after main is done
-	render.NewTemplates(&app)
+	render.NewRenderer(&app)
 
 	// connect to the database
 	db, err := run()
