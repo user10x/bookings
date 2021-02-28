@@ -16,7 +16,7 @@ func NewHelpers(a *config.AppConfig) {
 
 func ClientError(w http.ResponseWriter, status int) {
 	app.InfoLog.Println(status)
-	http.Error(w, http.StatusText(status), status)pkg/config/config.go
+	http.Error(w, http.StatusText(status), status)
 }
 
 func ServerError(w http.ResponseWriter, err error) {
