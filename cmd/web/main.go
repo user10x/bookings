@@ -64,6 +64,7 @@ func main() {
 	helpers.NewHelpers(&app)
 
 	socketAddr = ":8000"
+	log.Println("starting the server on", socketAddr)
 	http.ListenAndServe(socketAddr, r)
 
 	fmt.Println("something out here")
