@@ -10,7 +10,7 @@ func (m *postgresDBRepo) AllUsers() bool {
 	return true
 }
 
-// IntertReservation inserts a reservation into the database
+// InsertReservation inserts a reservation into the database
 func (m *postgresDBRepo) InsertReservation(res models.Reservation) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 
