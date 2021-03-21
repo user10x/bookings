@@ -53,3 +53,18 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, "home.page.tmpl", &models.TemplateData{})
 
 }
+
+// SearchAvailability returns search results
+func (m *Repository) SearchAvailability(w http.ResponseWriter, r *http.Request) {
+	//w.Write([]byte("Calling Home route"))
+	render.Template(w, "home.page.tmpl", &models.TemplateData{})
+
+}
+
+// SearchAvailability returns search results
+func (m *Repository) MakeRegistration(w http.ResponseWriter, r *http.Request) {
+	//w.Write([]byte("Calling Home route"))
+	render.Template(w, "home.page.tmpl", &models.TemplateData{})
+
+}
+

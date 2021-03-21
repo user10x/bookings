@@ -60,6 +60,9 @@ func main() {
 	r.Get("/health", handlers.Repo.Health)
 	r.Get("/about", handlers.Repo.About)
 	r.Get("/home", handlers.Repo.Home)
+	r.Get("/make-registration", handlers.Repo.MakeRegistration)
+	r.Get("/search-availability", handlers.Repo.SearchAvailability)
+	r.Post("/search-availability", handlers.Repo.SearchAvailability)
 
 	helpers.NewHelpers(&app)
 
