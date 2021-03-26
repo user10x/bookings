@@ -9,6 +9,7 @@ import (
 	"github.com/nickhalden/mynicceprogram/pkg/render"
 	"github.com/nickhalden/mynicceprogram/repository"
 	"github.com/nickhalden/mynicceprogram/repository/dbrepo"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -86,16 +87,19 @@ func (m *Repository) PostRegistration(w http.ResponseWriter, r *http.Request) {
 	startDate, err := time.Parse(layout, sd)
 	if err != nil {
 		helpers.ServerError(w,err)
+		return
 	}
 
 	endDate, err := time.Parse(layout, ed)
 	if err != nil {
 		helpers.ServerError(w, err)
+		return
 	}
 
 	roomID, err := strconv.Atoi(r.FormValue("room_id"))
 	if err != nil {
 		helpers.ServerError(w, err)
+		return
 	}
 
 	reservation := models.Reservation{
@@ -108,11 +112,30 @@ func (m *Repository) PostRegistration(w http.ResponseWriter, r *http.Request) {
 		RoomID:    roomID,
 	}
 
-	err = m.DB.InsertReservation(reservation)
+	var newReservationID int
+
+	newReservationID, err = m.DB.InsertReservation(reservation)
+
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+	restriction := models.RoomRestriction{
+		StartDate:     startDate,
+		EndDate:       endDate,
+		RoomID:        roomID,
+		ReservationID: newReservationID,
+		RestrictionID: 1,
+	}
+
+	var newRestrictionID int
+	newRestrictionID, err = m.DB.InsertRoomRestriction(restriction)
 
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
+
+	log.Println(newRestrictionID)
 
 	w.Write([] byte("registration successful"))
 
