@@ -61,8 +61,10 @@ func main() {
 	r.Get("/about", handlers.Repo.About)
 	r.Get("/home", handlers.Repo.Home)
 	r.Get("/make-registration", handlers.Repo.MakeRegistration)
+	r.Post("/make-registration", handlers.Repo.PostRegistration)
+
 	r.Get("/search-availability", handlers.Repo.SearchAvailability)
-	r.Post("/search-availability", handlers.Repo.SearchAvailability)
+	r.Post("/search-availability", handlers.Repo.PostAvailability)
 
 	helpers.NewHelpers(&app)
 
