@@ -6,4 +6,5 @@ import "log"
 type AppConfig struct {
 	InProduction bool
 	InfoLog      *log.Logger
+	ErrorLog     *log.Logger
 }
