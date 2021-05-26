@@ -26,9 +26,8 @@ func ConnectSQL(dsn string) (*DB, error) {
 		panic(err) // does not start up the app if the db is not up
 	}
 	d.SetMaxOpenConns(maxOpenDbConnections)
-	d.SetConnMaxIdleTime(maxIdleConnections)
+	d.SetMaxIdleConns(maxIdleConnections)
 	d.SetConnMaxLifetime(maxDbConnectionLifetime)
-
 	dbConn.SQL = d
 	return dbConn, nil
 }
