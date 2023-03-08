@@ -41,7 +41,7 @@ func main() {
 	defer db.SQL.Close()
 
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error connecting to the database %v", err)
 	}
 
 	log.Println("Connected to database")
