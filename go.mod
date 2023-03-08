@@ -1,13 +1,13 @@
 module github.com/nickhalden/mynicceprogram
 
-go 1.19
+go 1.20
 
 require (
-	//github.com/go-chi/chi v1.5.2
-	github.com/go-chi/chi v1.5.4
 	github.com/jackc/pgconn v1.8.0
 	github.com/jackc/pgx/v4 v4.10.1
 )
+
+require github.com/go-chi/chi v1.5.4
 
 require (
 	github.com/gofrs/uuid v4.0.0+incompatible // indirect

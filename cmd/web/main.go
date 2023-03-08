@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 	"github.com/nickhalden/mynicceprogram/pkg/config"
 	"github.com/nickhalden/mynicceprogram/pkg/driver"
 	"github.com/nickhalden/mynicceprogram/pkg/handlers"
@@ -11,9 +13,6 @@ import (
 	"net/http"
 	"os"
 	"time"
-
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
 )
 
 var socketAddr string
