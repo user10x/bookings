@@ -36,7 +36,7 @@ func NewHandlers(r *Repository) {
 	Repo = r
 }
 
-//Health check if the sample route is serving
+// Health check if the sample route is serving
 func (m *Repository) Health(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Calling Health route"))
 }
@@ -47,6 +47,12 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	stringMap := make(map[string]string)
 
 	stringMap["test"] = "Hello from template"
+
+	//m.App.Session.Put(r.Context(), "message", "Hello from a session!")
+
+	remoteIp := m.App.Session.GetString(r.Context(), "remote_ip")
+	stringMap["remote_ip"] = remoteIp
+
 	render.Template(w, "about.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
 	})
@@ -55,6 +61,9 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 // Home returns home route
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	//w.Write([]byte("Calling Home route"))
+	remoteIp := r.RemoteAddr
+	m.App.Session.Put(r.Context(), "remote_ip", remoteIp)
+
 	render.Template(w, "home.page.tmpl", &models.TemplateData{})
 
 }
@@ -75,18 +84,16 @@ func (m *Repository) PostRegistration(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseForm()
 	if err != nil {
-		helpers.ServerError(w,err)
+		helpers.ServerError(w, err)
 	}
 
 	sd := r.Form.Get("start_date")
 	ed := r.Form.Get("end_date")
 	layout := "2006-01-02"
 
-
-
 	startDate, err := time.Parse(layout, sd)
 	if err != nil {
-		helpers.ServerError(w,err)
+		helpers.ServerError(w, err)
 		return
 	}
 
@@ -137,8 +144,7 @@ func (m *Repository) PostRegistration(w http.ResponseWriter, r *http.Request) {
 
 	log.Println(newRestrictionID)
 
-	w.Write([] byte("registration successful"))
-
+	w.Write([]byte("registration successful"))
 
 }
 
@@ -146,5 +152,3 @@ func (m *Repository) PostRegistration(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(fmt.Sprintf("start date is  %s %s", r.FormValue("start_date"), r.FormValue("end_date"))))
 }
-
-

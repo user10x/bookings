@@ -7,7 +7,11 @@ require (
 	github.com/jackc/pgx/v4 v4.10.1
 )
 
-require github.com/go-chi/chi v1.5.4
+require (
+	github.com/alexedwards/scs/v2 v2.5.1
+	github.com/go-chi/chi v1.5.4
+	github.com/justinas/nosurf v1.1.1
+)
 
 require (
 	github.com/gofrs/uuid v4.0.0+incompatible // indirect
