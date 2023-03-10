@@ -126,17 +126,24 @@
 
 <script src="https://unpkg.com/notie"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-    const elem = document.getElementById('reservation-dates');
-    const rangepicker = new DateRangePicker(elem, {
-        format : 'yyyy-mm-dd',
-    });
-    
-    
+
+
     function alertSuccess(msg) {
         notie.alert({
             type: 'success', // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
             text: msg,
+        })
+    }
+
+    function callModal(){
+        Swal.fire({
+            title: 'Error!',
+            text: 'Do you want to continue',
+            icon: 'error',
+            confirmButtonText: 'Cool'
         })
     }
 
@@ -146,6 +153,7 @@
         if (elm.classList.contains("text-danger")){
             elm.classList.remove("text-danger");
             alertSuccess("sucess");
+            callModal();
         }else{
             elm.classList.add("text-danger")
         }
