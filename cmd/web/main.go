@@ -64,6 +64,7 @@ func main() {
 	mux.Use(NoSurf)
 	mux.Use(middleware.Logger)
 	mux.Use(middlewareCustom) //custom middleware
+	mux.Use(loggingMiddleware)
 	//app.Session.LoadAndSave(mux)
 
 	mux.Get("/health", handlers.Repo.Health)

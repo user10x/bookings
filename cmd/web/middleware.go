@@ -4,6 +4,7 @@ import (
 	"github.com/justinas/nosurf"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func middlewareCustom(next http.Handler) http.Handler {
@@ -29,4 +30,23 @@ func NoSurf(next http.Handler) http.Handler {
 
 func LoadSession(next http.Handler) http.Handler {
 	return session.LoadAndSave(next)
+}
+
+func loggingMiddleware(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
+		ipAddress := req.RemoteAddr
+		fwdAddress := req.Header.Get("X-Forwarded-For") // capitalisation doesn't matter
+		if fwdAddress != "" {
+			// Got X-Forwarded-For
+			ipAddress = fwdAddress // If it's a single IP, then awesome!
+
+			// If we got an array... grab the first IP
+			ips := strings.Split(fwdAddress, ", ")
+			if len(ips) > 1 {
+				ipAddress = ips[0]
+			}
+		}
+		log.Println("Got connection from ", ipAddress)
+		h.ServeHTTP(rw, req)
+	})
 }
