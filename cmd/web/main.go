@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -70,11 +69,13 @@ func main() {
 	mux.Get("/health", handlers.Repo.Health)
 	mux.Get("/about", handlers.Repo.About)
 	mux.Get("/home", handlers.Repo.Home)
-	mux.Get("/make-registration", handlers.Repo.MakeRegistration)
-	mux.Post("/make-registration", handlers.Repo.PostRegistration)
+	mux.Get("/register", handlers.Repo.Registration)
+	mux.Post("/register", handlers.Repo.Registration)
 
-	mux.Get("/search-availability", handlers.Repo.SearchAvailability)
-	mux.Post("/search-availability", handlers.Repo.PostAvailability)
+	mux.Get("/availability", handlers.Repo.SearchAvailability)
+	mux.Post("/availability", handlers.Repo.PostAvailability)
+
+	mux.Get("/availability", handlers.Repo.SearchAvailability)
 
 	helpers.NewHelpers(&app)
 
@@ -83,8 +84,6 @@ func main() {
 
 	http.ListenAndServe(socketAddr, sessionManager.LoadAndSave(mux))
 	//mux.Use(LoadSession)
-
-	fmt.Println("something out here")
 
 }
 

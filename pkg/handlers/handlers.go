@@ -74,7 +74,7 @@ func (m *Repository) SearchAvailability(w http.ResponseWriter, r *http.Request) 
 	render.Template(w, "search-availability.page.tmpl", &models.TemplateData{})
 }
 
-func (m *Repository) MakeRegistration(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) Registration(w http.ResponseWriter, r *http.Request) {
 	//w.Write([]byte("Calling Home route"))
 	render.Template(w, "make-registration.page.tmpl", &models.TemplateData{})
 }
@@ -121,7 +121,7 @@ func (m *Repository) PostRegistration(w http.ResponseWriter, r *http.Request) {
 
 	var newReservationID int
 
-	newReservationID, err = m.DB.InsertReservation(reservation)
+	newReservationID, err = m.DB.InsertReservation(r.Context(), reservation)
 
 	if err != nil {
 		helpers.ServerError(w, err)
@@ -136,7 +136,7 @@ func (m *Repository) PostRegistration(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var newRestrictionID int
-	newRestrictionID, err = m.DB.InsertRoomRestriction(restriction)
+	newRestrictionID, err = m.DB.InsertRoomRestriction(r.Context(), restriction)
 
 	if err != nil {
 		helpers.ServerError(w, err)

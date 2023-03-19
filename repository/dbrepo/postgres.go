@@ -11,8 +11,8 @@ func (m *postgresDBRepo) AllUsers() bool {
 }
 
 // InsertReservation inserts a reservation into the database
-func (m *postgresDBRepo) InsertReservation(res models.Reservation) (int, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+func (m *postgresDBRepo) InsertReservation(ctx context.Context, res models.Reservation) (int, error) {
+	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 
 	var newID int
 	defer cancel()
@@ -34,13 +34,14 @@ func (m *postgresDBRepo) InsertReservation(res models.Reservation) (int, error) 
 	).Scan(&newID)
 
 	if err != nil {
-		return 0,err
+		return 0, err
 	}
-	return newID,nil
+	return newID, nil
 }
+
 // InsertRoomRestriction inserts a room reservation
-func (m *postgresDBRepo) InsertRoomRestriction(r models.RoomRestriction) (int , error) {
-	ctx, cancel := context.WithTimeout(context.Background(),3*time.Second)
+func (m *postgresDBRepo) InsertRoomRestriction(ctx context.Context, r models.RoomRestriction) (int, error) {
+	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 
 	var newID int
 	defer cancel()
@@ -65,4 +66,20 @@ func (m *postgresDBRepo) InsertRoomRestriction(r models.RoomRestriction) (int , 
 	return newID, nil
 }
 
+func (m *postgresDBRepo) FindUserById(ctx context.Context, id string) (*models.User, error) {
 
+	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
+	defer cancel()
+
+	query := `SELECT id from users where id=$1`
+
+	row := m.DB.QueryRowContext(ctx, query, id)
+	user := &models.User{}
+	err := row.Scan(user)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
