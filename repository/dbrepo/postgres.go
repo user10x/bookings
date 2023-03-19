@@ -66,20 +66,44 @@ func (m *postgresDBRepo) InsertRoomRestriction(ctx context.Context, r models.Roo
 	return newID, nil
 }
 
-func (m *postgresDBRepo) FindUserById(ctx context.Context, id string) (*models.User, error) {
+// FindUserById Finds user by Id
+func (m *postgresDBRepo) FindUserById(ctx context.Context, id int) (*models.User, error) {
 
 	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 
-	query := `SELECT id from users where id=$1`
+	query := `SELECT id, first_name, last_name, email from users where id=$1`
 
 	row := m.DB.QueryRowContext(ctx, query, id)
 	user := &models.User{}
-	err := row.Scan(user)
+	err := row.Scan(
+		user.ID,
+		user.FirstName,
+		user.LastName,
+		user.Email,
+		user.AccessLevel,
+		user.CreatedAt,
+	)
 
 	if err != nil {
 		return nil, err
 	}
 
 	return user, nil
+}
+
+// UpdateUserById updates a user
+func (m *postgresDBRepo) UpdateUserById(ctx context.Context, u models.User) error {
+
+	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
+	defer cancel()
+
+	query := `UPDATE users set first_name = $1, last_name = $2, email = $3, access_level = $4, updated_at = $5 where id = $6`
+
+	_, err := m.DB.ExecContext(ctx, query, u.FirstName, u.LastName, u.Email, u.AccessLevel, time.Now(), u.ID)
+
+	if err != nil {
+		return err
+	}
+	return nil
 }
