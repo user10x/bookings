@@ -48,7 +48,7 @@ Schema: Visitors
 |   123 | 7777  | 567  |  44  |
 
 ## Tech used
-Backend Go: 1.15, Chi router
+Backend Go: 1.20, Chi router
 Frontend; HTML, CSS, Javascript
 Database: postgres12
 

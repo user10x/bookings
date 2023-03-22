@@ -87,6 +87,16 @@ func main() {
 
 }
 
+func testcsvdata() {
+	//test csv data
+	//read csv data
+	//csvData := helpers.ReadCsvData("data.csv")
+	//fmt.Println(csvData)
+	//write csv data
+	//helpers.WriteCsvData("data.csv", csvData)
+
+}
+
 func run() (*driver.DB, error) {
 
 	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=visitors user=nipun.chawla password=")

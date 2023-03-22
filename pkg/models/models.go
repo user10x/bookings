@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 // User is for users/owners model
 type User struct {
@@ -12,6 +14,12 @@ type User struct {
 	AccessLevel int
 	CreatedAt   time.Time
 	UpdateAt    time.Time
+}
+
+// UserPassword is for the user password model
+type UserPassword struct {
+	ID           int
+	PasswordHash string
 }
 
 // Room is for the room model

@@ -6,7 +6,7 @@ import (
 )
 
 type DatabaseRepo interface {
-	AllUsers() bool
+	AllUsers(context.Context) ([]models.User, error)
 	InsertReservation(ctx context.Context, res models.Reservation) (int, error)
 	InsertRoomRestriction(ctx context.Context, res models.RoomRestriction) (int, error)
 	FindUserById(ctx context.Context, id int) (*models.User, error)
