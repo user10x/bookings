@@ -20,7 +20,7 @@ func ClientError(w http.ResponseWriter, status int) {
 }
 
 func ServerError(w http.ResponseWriter, err error) {
-	trace := fmt.Printf("%v\n", debug.Stack())
+	trace, _ := fmt.Printf("%s\n", debug.Stack())
 	app.ErrorLog.Println(trace)
 	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 }
